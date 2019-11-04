@@ -1,9 +1,0 @@
-setup.py
-sophora/__init__.py
-sophora/importer.py
-sophora.egg-info/PKG-INFO
-sophora.egg-info/SOURCES.txt
-sophora.egg-info/dependency_links.txt
-sophora.egg-info/not-zip-safe
-sophora.egg-info/requires.txt
-sophora.egg-info/top_level.txt

@@ -10,6 +10,7 @@ def import_xml(soap_config, xml):
     logger = logging.getLogger(__name__)
     try:
         session = Session()
+        session.trust_env = False
         session.auth = HTTPBasicAuth(soap_config['user'], soap_config['password'])
         client = Client(soap_config['url'], transport=Transport(session=session))
 

@@ -24,6 +24,7 @@ def import_xml(soap_config, xml):
             'xml': result_xml
         }
 
+        print(str(result))
         if result_xml.importInformation['successful'] == "true":
             logger.info("Imported Sophora-XML for '%s' to '%s'", result_xml.sophoraId.text, soap_config['url'])
             result['successful'] = True

@@ -24,13 +24,15 @@ def import_xml(soap_config, xml):
         }
 
         if result_xml.importInformation['successful'] == "true":
-            logger.info("Imported Sophora-XML for '%s' to '%s'",
-                        getattr(result_xml.sophoraId, 'text', 'n/a'), soap_config['url'])
-            result['successful'] = True
+            if getattr(result_xml.sophoraId):
+                logger.info("Imported Sophora-XML for '%s' to '%s'", result_xml.sophoraId, soap_config['url'])
+                result['successful'] = True
+            else:
+                logger.fatal("SOAP Import did not fail, but could not generate a sophoraID!", )
+                result['successful'] = False
         else:
             logger.fatal("SOAP Import failed: %s", result_xml.importInformation.errorText.text)
             result['successful'] = False
-
         return result
 
     except Exception:

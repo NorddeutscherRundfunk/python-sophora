@@ -10,7 +10,6 @@ def import_xml(soap_config, xml):
     logger = logging.getLogger(__name__)
     try:
         session = Session()
-        session.trust_env = False
         session.auth = HTTPBasicAuth(soap_config['user'], soap_config['password'])
         client = Client(soap_config['url'], transport=Transport(session=session))
 
@@ -24,14 +23,13 @@ def import_xml(soap_config, xml):
             'xml': result_xml
         }
 
-        logger.info(str(result))
         if result_xml.importInformation['successful'] == "true":
-            logger.info("Imported Sophora-XML for '%s' to '%s'", result_xml.sophoraId.text, soap_config['url'])
+            logger.info("Imported Sophora-XML for '%s' to '%s'",
+                        getattr(result_xml.sophoraId, 'text', 'n/a'), soap_config['url'])
             result['successful'] = True
         else:
             logger.fatal("SOAP Import failed: %s", result_xml.importInformation.errorText.text)
             result['successful'] = False
-
         return result
 
     except Exception:

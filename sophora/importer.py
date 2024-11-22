@@ -14,7 +14,10 @@ def import_xml(soap_config, xml):
         client = Client(soap_config['url'], transport=Transport(session=session))
 
         if soap_config['instance']:
-            soap_result = client.service.importXmlToInstance(xml, soap_config['instance'])
+            if soap_config['instance'].isnumeric():
+                soap_result = client.service.importXmlToInstance(xml, soap_config['instance'])
+            else:
+                soap_result = client.service.importXmlToInstanceWithKey(xml, soap_config['instance'])
         else:
             soap_result = client.service.importXml(xml)
 
